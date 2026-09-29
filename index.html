@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krika - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {--brand-blue: #72a9ee; --btn-blue: #2374e1; --bg-light: #f2f3f5; --card-gray: #cad5e2; }
+        body {background-color: var(--bg-light); font-family: system-ui, "Segoe UI", sans-serif;}
+        .navbar-custom {background-color: var(--brand-blue); padding-top: 0.75rem; padding-bottom: 0.75rem;}
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {color: #ffffff !important; font-weight: 600;}
+
+        .btn-create {
+            background-color: var(--btn-blue);
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 700;
+            border: none;
+        }
+
+        .btn-create:hover {
+            background-color: #1a5cb8;
+            color: #ffffff;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 160px;
+        }
+
+        @media (min-width: 576px) {
+            .search-container {
+                max-width: 200px;
+            }
+        }
+
+        .search-input {
+            border-radius: 50px;
+            padding-right: 2.2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .search-input:focus {
+            box-shadow: none;
+            background-color: #ffffff;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            pointer-events: none;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -6px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            border-radius: 50%;
+            padding: 2px 5px;
+            line-height: 1;
+        }
+
+        /* --- ESTILOS PERSONALIZADOS DEL MENÚ OFFCANVAS --- */
+        .offcanvas-custom {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+
+        .offcanvas-custom .btn-close {
+            filter: invert(1); /* Cambia el icono de la X a blanco */
+        }
+
+        @media (max-width: 991.88px) {
+            .offcanvas-custom .nav-link {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* --- ESTILOS DEL CARRUSEL --- */
+        .carousel-banner {
+            border-radius: 24px;
+            overflow: hidden; /* Mantiene los bordes redondeados */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .carousel-item-slide {
+            min-height: 740px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Capa oscura para que el texto siempre sea legible */
+        .carousel-item-slide::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .carousel-caption-custom {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            padding: 2rem 1rem;
+        }
+
+        .btn-explore {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #1a1a1a;
+            border: 2px solid #ffffff;
+            border-radius: 50px;
+            padding: 0.6rem 2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-explore:hover {
+            background-color: #ffffff;
+            color: var(--btn-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* --- ESTILOS DEL PIE DE PÁGINA (FOOTER) --- */
+        .site-footer {
+            background-color: #72a9ee;
+            color: #e1e1e1;
+            padding: 2.5rem 0 2rem 0;
+            font-size: 0.85rem;
+        }
+
+        .site-footer a {
+            color: #e1e1e1;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+
+        .site-footer a:hover {
+            color: #ffffff;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-custom px-3 px-lg-4">
+        <div class="container-fluid p-0">
+            
+            <!-- LOGO -->
+            <a class="navbar-brand d-flex align-items-center gap-2 me-lg-4" href="./index.html">
+                <svg width="32" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                </svg>
+                <span class="fs-4 fw-bold">Krika</span>
+            </a>
+
+            <!-- ICONOS DERECHA (BUSCADOR, CARRITO Y BOTÓN HAMBURGUESA) -->
+            <div class="d-flex align-items-center gap-2 gap-sm-3 order-lg-last ms-auto">
+                <div class="search-container">
+                    <input type="text" class="form-control search-input" placeholder="Buscar">
+                    <i class="bi bi-search search-icon"></i>
+                </div>
+
+                <a href="#" class="cart-icon-wrapper ms-1">
+                    <i class="bi bi-bag"></i>
+                    <span class="cart-badge">1</span>
+                </a>
+
+                <!-- BOTÓN QUE ACTIVA EL PANÉL LATERAL OFFCANVAS -->
+                <button class="navbar-toggler p-0 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarKrika" aria-controls="navbarKrika" aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-1"></i>
+                </button>
+            </div>
+
+            <!-- CONTENEDOR DESPLEGABLE OFFCANVAS (DESPLAZAMIENTO DERECHA -> IZQUIERDA) -->
+            <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="navbarKrika" aria-labelledby="navbarKrikaLabel">
+                <div class="offcanvas-header border-bottom border-white border-opacity-10">
+                    <h2 class="offcanvas-title fw-bold" id="navbarKrikaLabel">Krika</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                
+                <div class="offcanvas-body">
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center w-100 gap-3 gap-lg-0">
+                        <a class="btn btn-create me-lg-4 align-self-start align-self-lg-center" href="#">Crea tu diseño</a>
+
+                        <ul class="navbar-nav gap-lg-3 flex-column flex-lg-row">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./productos/index.html">Productos</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="./ayuda/preguntasfrecuentes.html">Preguntas Frecuentes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="./registro/registro.html">Registrarse</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="./registro/tabla.html">Tabla</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- CARRUSEL BANNER -->
+    <main class="container-fluid px-3 px-md-5 my-4">
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>¡Atención!</strong> Nuestro local estará cerrado los días <strong>5 y 6 de septiembre.</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div id="heroCarousel" class="carousel slide carousel-fade carousel-banner" data-bs-ride="carousel">
+            
+            <!-- Indicadores (Puntitos inferiores) -->
+            <div class="carousel-indicators mb-3">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+
+            <!-- Slides del Carrusel -->
+            <div class="carousel-inner">
+                
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="carousel-item-slide" style="background-image: url('./imagenes/bannerindex/plushies.jpg');">
+                        <div class="carousel-caption-custom text-center">
+                            <h1 class="fw-bold display-5 mb-2">Decora a tu modo en Krika</h1>
+                            <p class="fs-4 fw-normal mb-4">Explora nuestros productos e ilustra tu estilo</p>
+                            <a href="./productos/index.html" class="btn btn-explore">
+                                Explorar Productos <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="carousel-item-slide" style="background-image: url('./imagenes/bannerindex/ChiikawaStickers.png');">
+                        <div class="carousel-caption-custom text-center">
+                            <h1 class="fw-bold display-5 mb-2">Stickers Únicos y Personalizados</h1>
+                            <p class="fs-4 fw-normal mb-4">Lleva tus personajes favoritos a donde quieras</p>
+                            <a href="#" class="btn btn-explore">
+                                Ver Stickers <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="carousel-item-slide" style="background-image: url('./imagenes/bannerindex/Pines.jpg');">
+                        <div class="carousel-caption-custom text-center">
+                            <h1 class="fw-bold display-5 mb-2">Pines y Llaveros Personalizados</h1>
+                            <p class="fs-4 fw-normal mb-4">Tu creatividad no tiene limites. Descubre la personalización de nuestros productos.</p>
+                            <a href="#" class="btn btn-explore">
+                                Personalizar <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Botones de Navegación (Anterior / Siguiente) -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+
+        </div>
+    </main>
+
+        <!-- PIE DE PÁGINA -->
+    <footer class="site-footer mt-auto">
+        <div class="container-fluid px-3 px-md-5">
+        
+            <!-- Texto de Copyright -->
+            <p class="mb-2">
+                © 2026 Krika. <a href="#">Cristobal Arismendi</a>
+            </p>
+
+            <!-- Enlaces legales -->
+            <div class="footer-links">
+                <a href="#">Política de reembolso</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Términos del servicio</a>
+                <a href="#">Información de contacto</a>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

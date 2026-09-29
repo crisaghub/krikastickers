@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krika - Tabla</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {--brand-blue: #72a9ee; --btn-blue: #2374e1; --bg-light: #f2f3f5; }
+        
+        /* Layout Flexbox para mantener el footer siempre abajo */
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background-color: var(--bg-light); 
+            font-family: system-ui, "Segoe UI", sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        .navbar-custom {background-color: var(--brand-blue); padding-top: 0.75rem; padding-bottom: 0.75rem;}
+        .navbar-custom .nav-link,
+        .navbar-custom .navbar-brand {color: #ffffff !important; font-weight: 600;}
+
+        .btn-create {
+            background-color: var(--btn-blue);
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 700;
+            border: none;
+        }
+
+        .btn-create:hover {
+            background-color: #1a5cb8;
+            color: #ffffff;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 160px;
+        }
+
+        @media (min-width: 576px) {
+            .search-container {
+                max-width: 200px;
+            }
+        }
+
+        .search-input {
+            border-radius: 50px;
+            padding-right: 2.2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .search-input:focus {
+            box-shadow: none;
+            background-color: #ffffff;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            pointer-events: none;
+        }
+
+        .cart-icon-wrapper {
+            position: relative;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -6px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            border-radius: 50%;
+            padding: 2px 5px;
+            line-height: 1;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* --- ESTILOS PERSONALIZADOS DEL MENÚ OFFCANVAS --- */
+        .offcanvas-custom {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+
+        .offcanvas-custom .btn-close {
+            filter: invert(1);
+        }
+
+        @media (max-width: 991.88px) {
+            .offcanvas-custom .nav-link {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        /* --- ESTILOS DEL PIE DE PÁGINA (FOOTER) --- */
+        .site-footer {
+            background-color: var(--brand-blue);
+            color: #ffffff;
+            padding: 2.5rem 0 2rem 0;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .site-footer a {
+            color: #ffffff;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+
+        .site-footer a:hover {
+            color: #f2f3f5;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-custom px-3 px-lg-4">
+        <div class="container-fluid p-0">
+            
+            <a class="navbar-brand d-flex align-items-center gap-2 me-lg-4" href="../index.html">
+                <svg width="32" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                </svg>
+                <span class="fs-4 fw-bold">Krika</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 gap-sm-3 order-lg-last ms-auto">
+                <div class="search-container">
+                    <input type="text" class="form-control search-input" placeholder="Buscar">
+                    <i class="bi bi-search search-icon"></i>
+                </div>
+
+                <a href="#" class="cart-icon-wrapper ms-1">
+                    <i class="bi bi-bag"></i>
+                    <span class="cart-badge">1</span>
+                </a>
+
+                <button class="navbar-toggler p-0 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarKrika" aria-controls="navbarKrika" aria-label="Toggle navigation">
+                    <i class="bi bi-list fs-1"></i>
+                </button>
+            </div>
+
+            <!-- CONTENEDOR DESPLEGABLE OFFCANVAS -->
+            <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="navbarKrika" aria-labelledby="navbarKrikaLabel">
+                <div class="offcanvas-header border-bottom border-white border-opacity-10">
+                    <h2 class="offcanvas-title fw-bold" id="navbarKrikaLabel">Krika</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                
+                <div class="offcanvas-body">
+                    <div class="d-flex flex-column flex-lg-row align-items-lg-center w-100 gap-3 gap-lg-0">
+                        <a class="btn btn-create me-lg-4 align-self-start align-self-lg-center" href="#">Crea tu diseño</a>
+
+                        <ul class="navbar-nav gap-lg-3 flex-column flex-lg-row">
+                            <li class="nav-item">
+                                <a class="nav-link" href="../productos/index.html">Productos</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="../ayuda/preguntasfrecuentes.html">Preguntas Frecuentes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="../registro/registro.html">Registrarse</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="../registro/tabla.html">Tabla</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container-fluid px-3 px-md-5 my-4">
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" class="table-primary">N°</th>
+                        <th scope="col" class="table-primary">Nombre completo</th>
+                        <th scope="col" class="table-primary">Correo electrónico</th>
+                        <th scope="col" class="table-primary">Ciudad o Comuna de residencia</th>
+                        <th scope="col" class="table-primary">Rol / Ocupación / Especialidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Felipe Prieto</td>
+                        <td>felipepri@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Sandra Garcia</td>
+                        <td>sandragar23@gmail.com</td>
+                        <td>Valparaíso</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Maria Teresa Iglesias</td>
+                        <td>mariateresa@gmail.com</td>
+                        <td>Bío Bío</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Gonzalo Gallardo</td>
+                        <td>gonzalogalla@gmail.com</td>
+                        <td>Valparaíso</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Alicia Cabrera</td>
+                        <td>aliciacabrera@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Martin Soto</td>
+                        <td>martinsoto@gmail.com</td>
+                        <td>Valparaíso</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>Andres Ortiz</td>
+                        <td>andreortiz@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>Carlos Vega</td>
+                        <td>carlosvega@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td>Juana Lopez</td>
+                        <td>juanalopez@gmail.com</td>
+                        <td>Bío Bío</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td>Carlos Sanchez</td>
+                        <td>carlossanchez@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">11</th>
+                        <td>Marcos Roman</td>
+                        <td>marcosroman@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td>Gonzalo Silva</td>
+                        <td>gonzasilva@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">13</th>
+                        <td>Pit Torres</td>
+                        <td>pittorres@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Ventas</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">14</th>
+                        <td>Giuseppe Rosinelli</td>
+                        <td>giusepperosinelli@gmail.com</td>
+                        <td>Valparaíso</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">15</th>
+                        <td>Ángela Diaz</td>
+                        <td>angeladiaz@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">16</th>
+                        <td>Cristina Serrano</td>
+                        <td>cristinaserrano@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Ventas</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">17</th>
+                        <td>Claudia Garcia</td>
+                        <td>claudiagarcia@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Ventas</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">18</th>
+                        <td>Rosario Alonso</td>
+                        <td>rosarioalonso@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">19</th>
+                        <td>Agustin Gonzalez</td>
+                        <td>agustingonza@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">20</th>
+                        <td>Oscar Mora</td>
+                        <td>oscarmora@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">21</th>
+                        <td>Angela Aguilar</td>
+                        <td>angelaaguilar@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Soporte</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">22</th>
+                        <td>Sofia Outlast</td>
+                        <td>sofiaoutlast@gmail.com</td>
+                        <td>Bío Bío</td>
+                        <td>Ventas</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">23</th>
+                        <td>Carmen Suarez</td>
+                        <td>carmensuarez@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">24</th>
+                        <td>Violeta Toledo</td>
+                        <td>violetatoledo@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Ventas</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">25</th>
+                        <td>Joaquin Bravo</td>
+                        <td>joaquinbravo@gmail.com</td>
+                        <td>Bío Bío</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">26</th>
+                        <td>Diego Soto</td>
+                        <td>diegosoto@gmail.com</td>
+                        <td>Valparaíso</td>
+                        <td>Ventas</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">27</th>
+                        <td>Mario Pinela</td>
+                        <td>mariopinela@gmail.com</td>
+                        <td>Región Metropolitana</td>
+                        <td>Cliente</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">28</th>
+                        <td>Marco Antonio Solis</td>
+                        <td>marcoantoniosolis@gmail.com</td>
+                        <td>Los Ríos</td>
+                        <td>Ventas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+    
+    <!-- PIE DE PÁGINA FOOTER -->
+    <footer class="site-footer">
+        <div class="container-fluid px-3 px-md-5">
+            <p class="mb-2">
+                © 2026 Krika. <a href="#">Cristobal Arismendi</a>
+            </p>
+            <div class="footer-links">
+                <a href="#">Política de reembolso</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Términos del servicio</a>
+                <a href="#">Información de contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
